@@ -44,7 +44,7 @@ class LearningAgent(Agent):
         	self.epsilon=0.0
         	self.alpha=0.0
         else:
-        	at = -0.1 * self.trial
+        	at = -0.03 * self.trial
         	self.epsilon = math.exp(at)
         	self.trial = self.trial + 1
 
@@ -121,12 +121,12 @@ class LearningAgent(Agent):
             if self.epsilon>random.random():
                 action=random.choice(self.valid_actions)
             else:
+            	action_list=list()
                 mQ = self.get_maxQ(state)
                 for x in self.Q[state]:
-                    if self.Q[state]==mQ:
-                        action=self.Q[state][x]
-        if self.Q[state][action] <= self.Q[state][self.next_waypoint]:
-        	action = self.next_waypoint
+                    if self.Q[state][x]==mQ:
+                       action_list.append(x)
+                action=random.choice(action_list)
         return action
 
 
